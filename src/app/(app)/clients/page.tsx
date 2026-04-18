@@ -176,7 +176,7 @@ export default function ClientsPage() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">{f.label}</label>
                   <input
                     type={f.type ?? 'text'}
-                    value={(form as Record<string, string>)[f.key]}
+                    value={(form as Record<string, unknown>)[f.key] as string}
                     onChange={(e) => setForm((prev) => ({ ...prev, [f.key]: e.target.value }))}
                     placeholder={f.placeholder}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
