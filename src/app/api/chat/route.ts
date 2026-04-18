@@ -85,7 +85,7 @@ export async function POST(req: Request) {
     })
   }
 
-  const result = streamText({
+  const result = await streamText({
     model: anthropic('claude-sonnet-4-6'),
     system: systemPrompt,
     messages: messages.map((m) => ({
