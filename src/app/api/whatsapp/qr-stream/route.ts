@@ -20,6 +20,7 @@ export async function GET(request: NextRequest) {
     return new NextResponse('Missing instanceId or sessionId', { status: 400 })
   }
 
+  const safeInstanceId: string = instanceId
   const serviceClient = getServiceClient()
   const encoder = new TextEncoder()
   const startTime = Date.now()
@@ -46,7 +47,7 @@ export async function GET(request: NextRequest) {
 
         try {
           // Check connection status
-          const instance = await fetchInstance(instanceId)
+          const instance = await fetchInstance(safeInstanceId)
           const status = instance?.connectionStatus ?? instance?.status ?? ''
 
           if (status === 'open' || status === 'connected') {
@@ -66,7 +67,7 @@ export async function GET(request: NextRequest) {
           }
 
           // Get QR code
-          const qrData = await getQrCode(instanceId)
+          const qrData = await getQrCode(safeInstanceId)
           const qrBase64 = qrData?.base64 ?? qrData?.code ?? ''
 
           if (qrBase64 && qrBase64 !== lastQr) {
